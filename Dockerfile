@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for a Vite app (build -> nginx)
 
 # --- Build stage ---
-FROM node:20-alpine AS build
+FROM docker.io/library/node:20-alpine AS build
 WORKDIR /app
 
 # Install dependencies first (better layer caching)
@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # --- Runtime stage ---
-FROM nginx:alpine
+FROM docker.io/library/nginx:alpine
 
 # Copy built assets to Nginx html directory
 COPY --from=build /app/dist /usr/share/nginx/html
